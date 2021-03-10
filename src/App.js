@@ -1,25 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react'
+import Step from "./components/Step";
+import Counter from "./components/Counter";
+
+import {createStore} from "./slomux/createStore";
+import {reducer} from "./slomux/reducer";
+
+//  initial state
+const defaultState = {
+    counter: 1,
+    stepSize: 2,
+}
+
+
+export const StoreContext = React.createContext()
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const store = createStore(reducer, defaultState)
+
+    return (
+        <StoreContext.Provider value={store}>
+            <div className="App">
+                <Counter />
+            </div>
+        </StoreContext.Provider>
+    )
 }
 
 export default App;
